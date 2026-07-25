@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>گروه برنامه‌نویسی Mr.Sharif | توسعه‌دهنده فول‌استک</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{fontFamily:{vazir:['Vazirmatn','sans-serif'],space:['Space Grotesk','sans-serif'],mono:['Space Mono','monospace']}}}}</script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        [data-theme="dark"]{--bg-1:#0a0a0a;--bg-2:#111;--bg-card:rgba(22,22,22,0.7);--text-1:#f5f5f5;--text-2:#a3a3a3;--text-3:#525252;--accent:#3b82f6;--accent-h:#2563eb;--accent-glow:rgba(59,130,246,.25);--accent2:#a855f7;--accent2-h:#9333ea;--accent2-glow:rgba(168,85,247,.2);--border:#262626;--code-bg:#1a1a2e;--dot-color:rgba(255,255,255,.04)}
+        [data-theme="light"]{--bg-1:#fafafa;--bg-2:#fff;--bg-card:rgba(255,255,255,0.8);--text-1:#0a0a0a;--text-2:#525252;--text-3:#a3a3a3;--accent:#2563eb;--accent-h:#1d4ed8;--accent-glow:rgba(37,99,235,.15);--accent2:#7c3aed;--accent2-h:#6d28d9;--accent2-glow:rgba(124,58,237,.12);--border:#e5e5e5;--code-bg:#f0f0f5;--dot-color:rgba(0,0,0,.04)}
+        [data-theme="neon"]{--bg-1:#050510;--bg-2:#0a0a1a;--bg-card:rgba(13,13,32,0.8);--text-1:#e0e0ff;--text-2:#8888bb;--text-3:#555580;--accent:#00ff88;--accent-h:#00cc6a;--accent-glow:rgba(0,255,136,.3);--accent2:#ff00ff;--accent2-h:#cc00cc;--accent2-glow:rgba(255,0,255,.2);--border:#1a1a3a;--code-bg:#0a0a20;--dot-color:rgba(0,255,136,.03)}
+
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Vazirmatn',sans-serif;overflow-x:hidden;background:var(--bg-1);color:var(--text-1);transition:background .5s,color .5s; -webkit-font-smoothing: antialiased;}
+        a{text-decoration:none;color:inherit}img{display:block;max-width:100%}
+        .accent-text{color:var(--accent)}.accent2-text{color:var(--accent2)}.text-sub{color:var(--text-2)}.text-muted{color:var(--text-3)}
+        .container{max-width:1280px;margin:0 auto;padding:0 24px}.container--narrow{max-width:900px}
+        
+        /* Language Toggle System */
+        .en-only { display: none; }
+        html[lang="en"] .en-only { display: inline-block; }
+        html[lang="en"] .fa-only { display: none; }
+        html[lang="en"] div.en-only, html[lang="en"] p.en-only, html[lang="en"] h1.en-only, html[lang="en"] h2.en-only, html[lang="en"] h3.en-only { display: block; }
+        html[lang="en"] { direction: ltr; }
+        html[lang="en"] body { font-family: 'Space Grotesk', sans-serif; }
+        
+        /* RTL/LTR Logic overrides */
+        html[dir="ltr"] .timeline { padding-right: 0; padding-left: 32px; }
+        html[dir="ltr"] .timeline::before { right: auto; left: 6px; }
+        html[dir="ltr"] .timeline-dot { right: auto; left: -28px; }
+        html[dir="ltr"] .blog-modal-close { left: auto; right: 16px; }
+        html[dir="ltr"] #backToTop { left: auto; right: 24px; }
+        html[dir="ltr"] .mobile-menu-close { left: auto; right: 24px; }
+        html[dir="ltr"] .section-header::after{background:linear-gradient(to right,transparent,var(--border))}
+        html[dir="ltr"] .nav-link::after{right:auto;left:0;}
+        html[dir="ltr"] .typing-cursor{margin-right:0;margin-left:4px;}
+        html[dir="ltr"] .timeline-card:hover{transform:translateX(4px)}
+        @media(max-width:768px){
+            html[dir="ltr"] .timeline { padding-right: 0; padding-left: 24px; }
+            html[dir="ltr"] .timeline::before { right: auto; left: 4px; }
+            html[dir="ltr"] .timeline-dot { right: auto; left: -22px; }
+        }
+
+        /* Navbar */
+        nav{position:fixed;top:0;right:0;left:0;z-index:1000;padding:16px 24px;transition:all .4s cubic-bezier(.4,0,.2,1);background:transparent}
+        nav.scrolled{background:color-mix(in srgb,var(--bg-1) 90%,transparent);border-bottom:1px solid var(--border);padding:10px 24px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);}
+        .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{display:flex;align-items:center;gap:12px;color:var(--text-1);transition:opacity .2s}
+        .nav-logo:hover{opacity:.9}
+        
+        .nav-logo-wrapper {
+            width: 46px; height: 46px; border-radius: 50%;
+            padding: 2px; background: linear-gradient(135deg, var(--accent), var(--accent2));
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-logo-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg-card); }
+        .nav-logo:hover .nav-logo-wrapper { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 20px var(--accent-glow), 0 0 20px var(--accent2-glow); }
+
+        .nav-logo-name{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.3rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 2px;}
+        .nav-links{display:flex;align-items:center;gap:28px}
+        .nav-link{position:relative;color:var(--text-2);font-size:14px;font-weight:500;transition:color .3s;padding:4px 0}
+        .nav-link:hover,.nav-link.active{color:var(--accent)}
+        .nav-link::after{content:'';position:absolute;bottom:-2px;right:0;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:1px;transition:width .3s cubic-bezier(.4,0,.2,1)}
+        .nav-link:hover::after,.nav-link.active::after{width:100%}
+        .nav-actions{display:flex;align-items:center;gap:12px}
+        .mobile-menu-btn{display:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-2);cursor:pointer;align-items:center;justify-content:center;transition:all .2s}
+        .mobile-menu-btn:hover{color:var(--text-1);border-color:var(--accent)}
+        .theme-toggle{display:flex;gap:4px;padding:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px}
+        .theme-btn{width:32px;height:32px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;background:transparent;color:var(--text-3)}
+        .theme-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+        .theme-btn:hover:not(.active){color:var(--text-1)}
+        
+        /* Mobile Menu */
+        .mobile-menu{position:fixed;inset:0;z-index:999;background:var(--bg-1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;visibility:hidden;transition:all .4s cubic-bezier(.4,0,.2,1)}
+        .mobile-menu.open{opacity:1;visibility:visible}
+        .mobile-menu-close{position:absolute;top:24px;left:24px;background:none;border:none;color:var(--text-2);cursor:pointer;transition:color .2s; padding: 8px;}
+        .mobile-menu a{font-size:20px;font-weight:600;color:var(--text-1);transition:color .3s,transform .3s}
+        .mobile-menu a:hover{color:var(--accent);transform:translateX(-8px)}
+
+        /* Preloader */
+        #entrance{position:fixed;inset:0;z-index:9999;background:var(--bg-1);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:30px;transition:opacity .4s,visibility .4s}
+        #entrance.hide{opacity:0;visibility:hidden;pointer-events:none}
+        .loader-bar{width:200px;height:2px;background:var(--border);border-radius:2px;overflow:hidden}
+        .loader-bar-inner{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;animation:loadBar 0.8s ease-in-out forwards}
+        .loader-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--text-2);direction:ltr}
+        @keyframes loadBar{to{width:100%}}
+        
+        .cube-scene{perspective:800px;width:120px;height:120px}
+        .cube{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:cubeSpin 1s cubic-bezier(.25,.46,.45,.94) forwards}
+        
+        /* انیمیشن باز شدن نرم مکعب به جای انفجار پخش‌شونده */
+        .cube.explode .face{transition:transform .8s cubic-bezier(0.2, 0, 0.2, 1), opacity .6s ease-out .2s}
+        .cube.explode .face:nth-child(1){transform:translateZ(180px);opacity:0}
+        .cube.explode .face:nth-child(2){transform:rotateY(180deg) translateZ(180px);opacity:0}
+        .cube.explode .face:nth-child(3){transform:rotateY(90deg) translateZ(180px);opacity:0}
+        .cube.explode .face:nth-child(4){transform:rotateY(-90deg) translateZ(180px);opacity:0}
+        .cube.explode .face:nth-child(5){transform:rotateX(90deg) translateZ(180px);opacity:0}
+        .cube.explode .face:nth-child(6){transform:rotateX(-90deg) translateZ(180px);opacity:0}
+        
+        @keyframes cubeSpin{0%{transform:rotateX(-15deg) rotateY(0)}40%{transform:rotateX(180deg) rotateY(180deg)}70%{transform:rotateX(300deg) rotateY(320deg)}100%{transform:rotateX(360deg) rotateY(360deg)}}
+        
+        .face{position:absolute;width:120px;height:120px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--text-1);border:1px solid var(--border);background:var(--bg-card);box-shadow:inset 0 0 10px var(--accent-glow)}
+        .face:nth-child(1){transform:translateZ(60px)}
+        .face:nth-child(2){transform:rotateY(180deg) translateZ(60px)}
+        .face:nth-child(3){transform:rotateY(90deg) translateZ(60px)}
+        .face:nth-child(4){transform:rotateY(-90deg) translateZ(60px)}
+        .face:nth-child(5){transform:rotateX(90deg) translateZ(60px)}
+        .face:nth-child(6){transform:rotateX(-90deg) translateZ(60px)}
+        
+        .float-symbols{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+        .float-sym{position:absolute;font-family:'Space Mono',monospace;color:var(--text-3);opacity:0.1;font-size:18px;animation:floatUp 3s ease-in-out infinite;}
+        @keyframes floatUp{0%,100%{transform:translateY(0) rotate(0);opacity:0.05}50%{transform:translateY(-30px) rotate(10deg);opacity:0.15}}
+
+        /* App & Sections */
+        #app{opacity:0;transition:opacity .6s ease .2s}
+        .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+        .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}.reveal-delay-5{transition-delay:.5s}
+
+        .section{padding:80px 0}
+        @media(min-width:768px){.section{padding:110px 0}}
+        .section--alt{background:var(--bg-2)}
+        .section--dotted{background-image:radial-gradient(var(--dot-color) 1px,transparent 1px);background-size:24px 24px;background-color:var(--bg-1)}
+        .section-header{display:flex;align-items:center;gap:16px;margin-bottom:48px}
+        .section-header::after{content:'';flex:1;height:1px;background:linear-gradient(to left,transparent,var(--border))}
+        .section-title{font-size:1.75rem;font-weight:700;color:var(--text-1);white-space:nowrap}
+        @media(min-width:768px){.section-title{font-size:2.25rem}}
+        .section-label{font-family:'Space Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;direction:ltr;white-space:nowrap}
+
+        /* Hero */
+        .hero-section{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background-image:radial-gradient(ellipse at 30% 50%,var(--accent-glow),transparent 60%),radial-gradient(ellipse at 70% 80%,color-mix(in srgb,var(--accent2) 8%,transparent),transparent 50%),radial-gradient(var(--dot-color) 1px,transparent 1px);background-size:100% 100%,100% 100%,24px 24px}
+        #codeRain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.15}
+        .hero-noise{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px 256px}
+        .hero-content{max-width:64rem;margin:90px auto 0;padding:0 24px;text-align:center;position:relative;z-index:10}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:999px;background:var(--bg-card);border:1px solid var(--border);margin-bottom:28px;position:relative;overflow:hidden}
+        .hero-badge::before{content:'';position:absolute;inset:-1px;border-radius:999px;padding:1px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.5;transition:opacity .3s}
+        .hero-badge:hover::before{opacity:1}
+        .hero-badge-dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));animation:pulseDot 2s ease-in-out infinite}
+        @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 0 0 var(--accent-glow)}50%{opacity:.7;box-shadow:0 0 0 6px transparent}}
+        .hero-badge-text{color:var(--text-2);font-size:13px;font-family:'Space Mono',monospace}
+        
+        .hero-title{font-family:'Vazirmatn',sans-serif;font-weight:900;font-size:2.2rem;line-height:1.3;margin-bottom:20px}
+        html[lang="en"] .hero-title{font-family:'Space Grotesk',sans-serif;}
+        .hero-title .accent-text{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        @media(min-width:768px){.hero-title{font-size:3.8rem}}
+        @media(min-width:1024px){.hero-title{font-size:4.5rem}}
+        
+        .hero-typing{font-size:1.15rem;font-weight:500;color:var(--text-2);margin-bottom:28px;min-height:2.2em;direction:rtl}
+        @media(min-width:768px){.hero-typing{font-size:1.5rem}}
+        .typing-cursor{display:inline-block;width:3px;height:1.1em;background:linear-gradient(180deg,var(--accent),var(--accent2));margin-right:4px;animation:blink 1s step-end infinite;vertical-align:text-bottom}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+        .hero-desc{color:var(--text-2);font-size:1.05rem;max-width:42rem;margin:0 auto 36px;line-height:1.8}
+        
+        .hero-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px; margin-bottom: 20px;}
+        .hero-tech{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin-top:55px}
+        .hero-tech-item{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:10px;background:var(--bg-card);border:1px solid var(--border);font-size:11px;color:var(--text-3);font-family:'Space Mono',monospace;transition:all .3s}
+        .hero-tech-item:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-2px)}
+        .hero-tech-item i{width:14px;height:14px}
+        
+        .mouse-glow{position:absolute;width:500px;height:500px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,var(--accent-glow),transparent 70%);transform:translate(-50%,-50%);opacity:.4;transition:left .15s ease-out,top .15s ease-out;z-index:3}
+        .mouse-glow-2{position:absolute;width:400px;height:400px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,var(--accent2-glow),transparent 70%);transform:translate(-50%,-50%);opacity:.3;transition:left .25s ease-out,top .25s ease-out;z-index:3}
+        .scroll-indicator{margin-top:56px;animation:scrollBounce 2s ease-in-out infinite;color:var(--text-3)}
+        @keyframes scrollBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+        /* Buttons */
+        .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-family:inherit;font-weight:600;font-size:14px;border:none;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 0 20px var(--accent-glow)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow),0 8px 30px var(--accent2-glow);filter:brightness(1.1)}
+        .btn-outline{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:12px;background:transparent;color:var(--text-1);font-family:inherit;font-weight:600;font-size:14px;border:1px solid var(--border);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1)}
+        .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+        /* About Image */
+        .about-grid{display:grid;gap:40px}
+        @media(min-width:768px){.about-grid{grid-template-columns:1fr 1fr;align-items:center; gap: 60px;}}
+        .about-image-wrapper {
+            position: relative; width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg-card); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .about-image-wrapper:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); border-color: var(--accent); }
+        .about-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .about-image-wrapper:hover img { transform: scale(1.05); }
+
+        .about-paragraph{color:var(--text-2);font-size:1rem;line-height:2;margin-bottom:16px}
+        
+        .single-stat-card {
+            margin-top: 30px; padding: 24px; border-radius: 16px;
+            background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 5%, transparent), color-mix(in srgb, var(--accent2) 5%, transparent));
+            border: 1px solid var(--border); display: flex; transition: all 0.3s;
+        }
+        .single-stat-card:hover { border-color: var(--accent); box-shadow: 0 10px 30px var(--accent-glow); }
+        .single-stat-number {
+            font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 800; line-height: 1;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .single-stat-text { color: var(--text-1); font-size: 1.1rem; font-weight: 600; line-height: 1.5; }
+        .single-stat-sub { color: var(--text-3); font-size: 13px; display: block; margin-top: 4px; }
+
+        /* Skills */
+        .skills-grid{display:grid;gap:20px}
+        @media(min-width:768px){.skills-grid{grid-template-columns:repeat(3,1fr)}}
+        .skill-card{padding:24px;border-radius:16px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,transform .3s,box-shadow .3s}
+        .skill-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08)}
+        .skill-card-header{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+        .skill-card-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .skill-card-title{font-weight:700;font-size:1.05rem;color:var(--text-1)}
+        .skill-list{display:flex;flex-direction:column;gap:18px}
+        .skill-item-info{display:flex;justify-content:space-between;margin-bottom:6px}
+        .skill-item-name{color:var(--text-2);font-size:13px;font-weight:500}
+        .skill-item-percent{color:var(--text-1);font-size:13px;font-family:'Space Mono',monospace;font-weight:700}
+        .skill-bar{height:6px;background:rgba(128,128,128,0.15);border-radius:3px;overflow:hidden;position:relative}
+        .skill-bar-fill{height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 1.2s cubic-bezier(.22,1,.36,1);position:relative}
+        .skill-bar-fill::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);animation:shimmer 2s infinite}
+        @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+        /* Timeline / Experience */
+        .timeline{position:relative;padding-right:32px}
+        .timeline::before{content:'';position:absolute;right:6px;top:0;bottom:0;width:2px;background:var(--border)}
+        .timeline-item{position:relative;padding-bottom:32px}
+        .timeline-item:last-child{padding-bottom:0}
+        .timeline-dot{position:absolute;right:-28px;top:8px;width:12px;height:12px;border-radius:50%;border:2px solid var(--accent);background:var(--bg-2);z-index:1;transition:all .3s}
+        .timeline-item:first-child .timeline-dot{background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 12px var(--accent-glow)}
+        .timeline-card{padding:22px;border-radius:16px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,transform .3s}
+        .timeline-card:hover{border-color:var(--accent);transform:translateX(-4px)}
+        .timeline-card-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:6px}
+        .timeline-card-title{font-weight:700;font-size:1.05rem;color:var(--text-1)}
+        .timeline-badge{font-size:10px;font-family:'Space Mono',monospace;padding:3px 10px;border-radius:999px;background:var(--border);color:var(--text-2)}
+        .timeline-badge--active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+        .timeline-company{color:var(--accent);font-size:13px;font-weight:600;margin-bottom:10px}
+        .timeline-desc{color:var(--text-2);font-size:14px;line-height:1.8}
+
+        /* Blog */
+        .blog-grid{display:grid;gap:20px}
+        @media(min-width:768px){.blog-grid{grid-template-columns:repeat(3,1fr)}}
+        .blog-card{border:1px solid var(--border);border-radius:16px;background:var(--bg-card);overflow:hidden;transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s,border-color .3s;cursor:pointer}
+        .blog-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 20px 50px rgba(0,0,0,.08)}
+        
+        /* عکس بلاگ (نسبت ۱۶:۹ با زوم‌اوت کامل و پس‌زمینه مشکی) */
+        .blog-card-image{overflow:hidden;aspect-ratio:16/9; background:#000000;}
+        .blog-card-image img{width:100%;height:100%;object-fit:contain;object-position:center;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+        .blog-card:hover .blog-card-image img{transform:scale(1.05)}
+        
+        .blog-card-body{padding:20px}
+        .blog-card-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+        .blog-card-tag{font-size:11px;font-family:'Space Mono',monospace;color:var(--accent)}
+        .blog-card-date{color:var(--text-3);font-size:11px}
+        .blog-card-title{font-weight:700;font-size:.95rem;color:var(--text-1);line-height:1.7;margin-bottom:8px;transition:color .2s}
+        .blog-card:hover .blog-card-title{color:var(--accent)}
+        .blog-card-excerpt{color:var(--text-2);font-size:12px;line-height:1.7;margin-bottom:14px}
+        .blog-card-link{color:var(--accent);font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:gap .3s}
+        .blog-card-link:hover{gap:8px}
+
+        /* Blog Modal */
+        .blog-modal-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .4s;padding:16px; backdrop-filter: blur(8px); perspective: 1200px;}
+        .blog-modal-overlay.open{opacity:1;visibility:visible}
+        .blog-modal{width:100%;max-width:750px;height: 85vh; max-height: 85vh; background:var(--bg-card);border:1px solid var(--border);border-radius:20px;overflow:hidden; display:flex;flex-direction:column; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), 0 0 40px var(--accent-glow); opacity: 0; transform: scale(0.85) translateY(40px) rotateX(10deg); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); transform-origin: center bottom;}
+        .blog-modal-overlay.open .blog-modal{opacity: 1; transform: scale(1) translateY(0) rotateX(0);}
+        
+        /* مودال عکس بلاگ */
+        .blog-modal-image{width:100%;height: 220px;flex-shrink: 0;overflow:hidden;position:relative; background:#000000;}
+        @media(min-width:768px){.blog-modal-image{height: 300px;}}
+        .blog-modal-image img{width:100%;height:100%;object-fit:contain}
+        
+        .blog-modal-close{position:absolute;top:16px;left:16px;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,0.4);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s; z-index: 10; backdrop-filter: blur(4px);}
+        .blog-modal-close:hover{background:var(--accent);transform:rotate(90deg) scale(1.1);}
+        .blog-modal-content{flex: 1; padding: 24px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;}
+        @media(min-width:768px){.blog-modal-content{padding: 36px;}}
+        .blog-modal-content::-webkit-scrollbar{width:6px}
+        .blog-modal-content::-webkit-scrollbar-track{background:transparent}
+        .blog-modal-content::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+        .blog-modal-tag{display:inline-block;padding:6px 14px;border-radius:20px;font-size:12px;font-family:'Space Mono',monospace;color:var(--accent);background:color-mix(in srgb,var(--accent) 15%,transparent);margin-bottom:12px; font-weight: bold;}
+        .blog-modal-title{font-size:1.5rem;font-weight:800;color:var(--text-1);line-height:1.5;margin-bottom:8px}
+        @media(min-width:768px){.blog-modal-title{font-size:2rem;}}
+        .blog-modal-date{font-size:13px;color:var(--text-3);margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border); display: flex; align-items: center; gap: 8px;}
+        .blog-modal-body{color:var(--text-2);font-size:15px;line-height:2.2}
+        @media(min-width:768px){.blog-modal-body{font-size:16px;}}
+        .blog-modal-body h3{color:var(--text-1);font-size:1.3rem;font-weight:800;margin:32px 0 16px}
+        .blog-modal-body p{margin-bottom:18px}
+        .blog-modal-body code{font-family:'Space Mono',monospace;font-size:13px;background:var(--code-bg);padding:3px 8px;border-radius:6px;color:var(--accent2);direction:ltr;display:inline-block; border: 1px solid var(--border);}
+        .blog-modal-body pre{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:24px 0;overflow-x:auto;font-family:'Space Mono',monospace;font-size:13px;line-height:1.7;color:var(--text-2);direction:ltr;text-align:left}
+        .blog-modal-body ul{margin:16px 0;padding-right:24px; list-style-type: disc;}
+        .blog-modal-body li{margin-bottom:10px;color:var(--text-2)}
+        .blog-modal-body strong{color:var(--text-1)}
+
+        /* Contact & Marquee Section */
+        .contact-section-inner { display: flex; flex-direction: column; gap: 60px; }
+        .contact-channels-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 20px; }
+        .contact-channel {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 16px 24px; border-radius: 16px; border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--text-2); font-size: 14px; font-weight: 600;
+            transition: all .3s; text-decoration: none;
+        }
+        .contact-channel:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        /* Infinite Marquee */
+        .achievements-section {
+            width: 100%; overflow: hidden; display: flex; flex-direction: column; align-items: center;
+            background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 3%, transparent) 50%, transparent);
+            border-top: 1px solid color-mix(in srgb, var(--text-1) 5%, transparent); 
+            border-bottom: 1px solid color-mix(in srgb, var(--text-1) 5%, transparent);
+            padding: 50px 0; position: relative;
+        }
+        .achievements-section::after {
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80%; height: 50%; background: var(--accent-glow); filter: blur(80px); z-index: 0; pointer-events: none;
+        }
+        .marquee-wrapper {
+            width: 100%; position: relative; z-index: 1; display: flex; gap: 20px;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            padding: 15px 0; margin-top: -15px; margin-bottom: -15px;
+        }
+        .marquee-group { display: flex; gap: 20px; flex-shrink: 0; animation: scroll-left 25s linear infinite; }
+        .marquee-wrapper:hover .marquee-group { animation-play-state: paused; }
+        .marquee-item {
+            display: flex; align-items: center; gap: 12px; padding: 16px 28px;
+            background: color-mix(in srgb, var(--bg-card) 90%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border); border-radius: 16px;
+            color: var(--text-1); font-size: 15px; font-weight: 600; font-family: 'Space Grotesk', sans-serif;
+            white-space: nowrap; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: default;
+        }
+        .marquee-item:hover { border-color: var(--accent); transform: translateY(-8px) scale(1.03); box-shadow: 0 15px 35px var(--accent-glow); background: var(--bg-card); color: var(--accent); }
+        .marquee-item i { transition: transform 0.4s; }
+        .marquee-item:hover i { transform: scale(1.2) rotate(-10deg); }
+
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-100% - 20px)); } }
+
+        .footer{padding:28px 0;border-top:1px solid var(--border);background:var(--bg-2)}
+        .footer-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+        .footer-text{color:var(--text-3);font-size:12px}
+        .footer-socials{display:flex;gap:14px}
+        .footer-socials a{color:var(--text-3);transition:color .2s,transform .2s}
+        .footer-socials a:hover{color:var(--accent);transform:translateY(-2px)}
+
+        /* Utility Components */
+        #backToTop{position:fixed;bottom:24px;left:24px;z-index:999;width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(20px);transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 20px var(--accent-glow)}
+        #backToTop.show{opacity:1;transform:translateY(0)}
+        #backToTop:hover{transform:translateY(-4px);box-shadow:0 8px 30px var(--accent-glow),0 8px 30px var(--accent2-glow)}
+
+        /* Neon Theme Enhancements */
+        [data-theme="neon"] .accent-text{text-shadow:0 0 20px rgba(0,255,136,.4)}
+        [data-theme="neon"] .skill-bar-fill{box-shadow:0 0 10px rgba(0,255,136,.4)}
+        [data-theme="neon"] .timeline-dot{box-shadow:0 0 10px rgba(0,255,136,.4)}
+        [data-theme="neon"] .btn-primary{box-shadow:0 0 30px rgba(0,255,136,.3)}
+        [data-theme="neon"] .single-stat-number{text-shadow:0 0 20px rgba(0,255,136,.4)}
+        
+        /* Portfolio Fixes */
+        .portfolio-mockup {
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(.4,0,.2,1);
+            outline: none;
+        }
+        .portfolio-mockup:active, .portfolio-mockup:focus {
+            box-shadow: 0 0 35px var(--accent-glow), 0 0 20px var(--accent) !important;
+            border-color: var(--accent) !important;
+            transform: scale(0.98);
+        }
+
+        /* Mobile Optimization */
+        @media(max-width:768px){
+            .nav-links{display:none}.mobile-menu-btn{display:flex}
+            .section{padding:70px 0}
+            .skill-card,.timeline-card,.blog-card,.contact-channel,.hero-badge,#backToTop{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+            .timeline{padding-right:24px}.timeline::before{right:4px}.timeline-dot{right:-22px;width:10px;height:10px}
+            .blog-grid{grid-template-columns:1fr}
+            .about-grid{grid-template-columns:1fr; gap:30px;}
+            #codeRain{display:none}
+            .blog-modal { width: 92%; max-height: 80vh; border-radius: 16px; }
+            .blog-modal-image { height: 180px; }
+            .blog-modal-content { padding: 20px; }
+            .marquee-item { padding: 12px 20px; font-size: 13px; }
+        }
+        @media(max-width:480px){
+            .container{padding:0 16px}
+            nav{padding:12px 16px}
+            nav.scrolled{padding:10px 16px}
+            .section{padding:50px 0}
+            .section-header{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:28px}
+            .section-title{font-size:1.4rem}
+            .hero-section { padding-top: 60px; }
+            .hero-content { margin-top: 40px; }
+            .hero-badge { margin-top: 50px; } 
+            .hero-title{font-size:1.8rem;margin-bottom:16px}
+            .hero-typing{font-size:1rem;margin-bottom:20px}
+            .hero-desc{font-size:.95rem;margin-bottom:28px;line-height:1.7}
+            .hero-actions{flex-direction:column;gap:10px;width:100%}
+            .hero-actions .btn-primary,.hero-actions .btn-outline{width:100%;justify-content:center}
+            .hero-tech{gap:6px;margin-top:45px}.hero-tech-item{padding:5px 10px;font-size:10px}
+            .about-paragraph{font-size:.9rem;line-height:1.8}
+            .single-stat-card { width: 100%; justify-content: center; padding: 20px; }
+            .skill-card{padding:18px}.skill-card-header{margin-bottom:18px}
+            .timeline-card{padding:16px}
+            .blog-card-body{padding:16px}.blog-card-title{font-size:.9rem}.blog-card-excerpt{font-size:11px}
+            .contact-channel { width: 100%; justify-content: flex-start; padding: 14px 20px;}
+            .footer-inner{flex-direction:column;text-align:center}
+            #backToTop{bottom:16px;left:16px;width:38px;height:38px}
+        }
+    </style>
+</head>
+<body class="lang-fa-active">
+
+<!-- صفحه لودینگ اولیه -->
+<div id="entrance">
+    <div class="float-symbols" id="floatSymbols"></div>
+    <div class="cube-scene"><div class="cube" id="cube">
+        <div class="face">{ Mr.Sharif }</div><div class="face">const app = ()</div>
+        <div class="face">&lt;DevGroup/&gt;</div><div class="face">git push</div>
+        <div class="face">async/await</div><div class="face">SELECT * FROM</div>
+    </div></div>
+    <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+    <p class="loader-label">initializing Mr.Sharif Group...</p>
+</div>
+
+<div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" onclick="closeMobile()" aria-label="بستن"><i data-lucide="x" style="width:28px;height:28px"></i></button>
+    <a href="#hero" onclick="closeMobile()"><span class="fa-only">خانه</span><span class="en-only">Home</span></a>
+    <a href="#about" onclick="closeMobile()"><span class="fa-only">درباره ما</span><span class="en-only">About Us</span></a>
+    <a href="#skills" onclick="closeMobile()"><span class="fa-only">مهارت‌ها</span><span class="en-only">Skills</span></a>
+    <a href="#portfolio" onclick="closeMobile()"><span class="fa-only">نمونه کارها</span><span class="en-only">Portfolio</span></a>
+    <a href="#experience" onclick="closeMobile()"><span class="fa-only">سوابق</span><span class="en-only">Experience</span></a>
+    <a href="#blog" onclick="closeMobile()"><span class="fa-only">بلاگ</span><span class="en-only">Blog</span></a>
+    <a href="#contact" onclick="closeMobile()"><span class="fa-only">تماس</span><span class="en-only">Contact</span></a>
+</div>
+
+<!-- مودال بلاگ -->
+<div class="blog-modal-overlay" id="blogModal" onclick="closeBlogModal(event)">
+    <div class="blog-modal" onclick="event.stopPropagation()">
+        <div class="blog-modal-image">
+            <img id="modalImg" src="" alt="تصویر مقاله">
+            <button class="blog-modal-close" onclick="closeBlogModal()"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+        </div>
+        <div class="blog-modal-content">
+            <span class="blog-modal-tag" id="modalTag"></span>
+            <h2 class="blog-modal-title" id="modalTitle"></h2>
+            <div class="blog-modal-date">
+                <i data-lucide="calendar" style="width:16px;height:16px"></i>
+                <span id="modalDate"></span>
+                <span style="margin:0 12px; color:var(--border)">|</span>
+                <i data-lucide="clock" style="width:16px;height:16px"></i>
+                <span>زمان مطالعه: ۵ دقیقه</span>
+            </div>
+            <div class="blog-modal-body" id="modalBody"></div>
+        </div>
+    </div>
+</div>
+
+<nav id="navbar"><div class="nav-inner">
+    <div class="flex flex-col">
+        <a href="#hero" class="nav-logo">
+            <div class="nav-logo-wrapper">
+                <img src="photo/file_logo.jpg" alt="Mr. Sharif Logo" class="nav-logo-img">
+            </div>
+            <div class="nav-logo-name" dir="ltr">
+                <span class="accent-text opacity-70 font-mono">&lt;</span>
+                <span style="color:var(--text-1)">Mr</span><span class="accent2-text">.</span><span style="color:var(--text-1)">Sharif</span>
+                <span class="accent-text opacity-70 font-mono">/&gt;</span>
+            </div>
+        </a>
+        <!-- کلید تغییر زبان -->
+        <div class="flex" style="margin-top: 2px;">
+            <button onclick="toggleLang()" class="text-[10px] font-mono text-text-3 hover:text-accent transition-colors bg-bg-card border border-border px-2 py-0.5 rounded cursor-pointer mx-14">
+                <span class="fa-only">EN Switch</span>
+                <span class="en-only">FA Switch</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="nav-links">
+        <a href="#about" class="nav-link"><span class="fa-only">درباره ما</span><span class="en-only">About</span></a>
+        <a href="#skills" class="nav-link"><span class="fa-only">مهارت‌ها</span><span class="en-only">Skills</span></a>
+        <a href="#portfolio" class="nav-link"><span class="fa-only">نمونه کارها</span><span class="en-only">Portfolio</span></a>
+        <a href="#experience" class="nav-link"><span class="fa-only">سوابق</span><span class="en-only">Experience</span></a>
+        <a href="#blog" class="nav-link"><span class="fa-only">بلاگ</span><span class="en-only">Blog</span></a>
+        <a href="#contact" class="nav-link"><span class="fa-only">تماس</span><span class="en-only">Contact</span></a>
+    </div>
+    <div class="nav-actions">
+        <!-- تم روشن بصورت پیش‌فرض فعال شده است -->
+        <div class="theme-toggle">
+            <button class="theme-btn" data-theme-target="dark" title="تاریک"><i data-lucide="moon" style="width:16px;height:16px"></i></button>
+            <button class="theme-btn active" data-theme-target="light" title="روشن"><i data-lucide="sun" style="width:16px;height:16px"></i></button>
+            <button class="theme-btn" data-theme-target="neon" title="نئون"><i data-lucide="zap" style="width:16px;height:16px"></i></button>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleMobile()"><i data-lucide="menu" style="width:20px;height:20px"></i></button>
+    </div>
+</div></nav>
+
+<main id="app">
+    <section id="hero" class="hero-section">
+        <canvas id="codeRain"></canvas>
+        <div class="hero-noise"></div>
+        <div class="mouse-glow" id="mouseGlow"></div>
+        <div class="mouse-glow-2" id="mouseGlow2"></div>
+        <div class="hero-content">
+            <div class="reveal"><div class="hero-badge"><span class="hero-badge-dot"></span><span class="hero-badge-text" dir="ltr">available for work</span></div></div>
+            <h1 class="reveal reveal-delay-1 hero-title">
+                <span class="fa-only">گروه برنامه‌نویسی</span><span class="en-only">Programming Group</span>
+                <span class="accent-text">Mr.Sharif</span>
+            </h1>
+            <div class="reveal reveal-delay-2 hero-typing font-bold"><span id="typingText"></span><span class="typing-cursor"></span></div>
+            <p class="reveal reveal-delay-3 hero-desc">
+                <span class="fa-only">توسعه‌دهنده فول‌استک با بیش از ۳ سال تجربه در ساخت اپلیکیشن‌های وب و دسکتاپ. علاقه‌مند به یادگیری مداوم و تبدیل ایده‌ها به محصولات کاربردی و مقیاس‌پذیر.</span>
+                <span class="en-only">Full-Stack Developer with 3+ years of experience building scalable web and desktop applications. Passionate about transforming complex ideas into functional products.</span>
+            </p>
+            <div class="reveal reveal-delay-4 hero-actions">
+                <a href="#portfolio" class="btn-primary">
+                    <span class="fa-only">مشاهده نمونه کارها</span><span class="en-only">View Portfolio</span>
+                </a>
+                <a href="#contact" class="btn-outline">
+                    <span class="fa-only">ارتباط با ما</span><span class="en-only">Contact Us</span>
+                </a>
+            </div>
+            <div class="reveal reveal-delay-4 hero-tech" dir="ltr">
+                <span class="hero-tech-item"><i data-lucide="file-code-2"></i> HTML5</span>
+                <span class="hero-tech-item"><i data-lucide="paintbrush"></i> CSS3</span>
+                <span class="hero-tech-item"><i data-lucide="code-2"></i> JavaScript</span>
+                <span class="hero-tech-item"><i data-lucide="code-2"></i> Python</span>
+                <span class="hero-tech-item"><i data-lucide="code-2"></i> C++</span>
+                <span class="hero-tech-item"><i data-lucide="server"></i> Node.js</span>
+            </div>
+            <div class="reveal reveal-delay-5 scroll-indicator"><i data-lucide="chevron-down" style="width:24px;height:24px"></i></div>
+        </div>
+    </section>
+
+    <section id="about" class="section section--alt"><div class="container">
+        <div class="section-header reveal">
+            <h2 class="section-title"><span class="fa-only">درباره ما</span><span class="en-only">About Us</span></h2>
+            <span class="section-label">about us</span>
+        </div>
+        <div class="about-grid">
+            
+            <div class="about-image reveal reveal-delay-1">
+                <div class="about-image-wrapper">
+                    <img src="photo/about.jpg" alt="درباره ما">
+                </div>
+            </div>
+            
+            <div class="about-text">
+                <p class="reveal reveal-delay-2 about-paragraph">
+                    <span class="fa-only">ما یک تیم توسعه‌دهنده فول‌استک هستیم که با تمرکز بر کیفیت، امنیت و معماری اصولی، در حوزه برنامه‌نویسی فعالیت داریم. کدهای ما با دقت و ظرافت در کنار هم قرار می‌گیرند تا اثری ماندگار و کاربردی خلق کنند.</span>
+                    <span class="en-only">We are a full-stack development team focusing on quality, security, and solid architecture. We weave code with precision to create lasting, practical digital solutions.</span>
+                </p>
+                <p class="reveal reveal-delay-3 about-paragraph">
+                    <span class="fa-only">علاوه بر توسعه وب مدرن (فرانت‌اند و بک‌اند)، تجربه کار با زبان‌هایی مثل پایتون و سی‌پلاس‌پلاس را نیز در کارنامه داریم. همواره در تلاشیم با استفاده از جدیدترین تکنولوژی‌ها، ایده‌های پیچیده را به محصولات مقیاس‌پذیر تبدیل کنیم.</span>
+                    <span class="en-only">Alongside modern web development, we possess strong experience in Python and C++. We constantly strive to leverage the latest technologies to turn complex ideas into scalable products.</span>
+                </p>
+                
+                <div class="single-stat-card reveal reveal-delay-4 flex-col md:flex-row md:items-center gap-6">
+                    <div class="flex items-center gap-4 flex-shrink-0">
+                        <div class="single-stat-number" data-count="3">0</div>
+                        <div>
+                            <div class="single-stat-text"><span class="fa-only">سال تجربه تخصصی</span><span class="en-only">Years Experience</span></div>
+                            <span class="single-stat-sub"><span class="fa-only">توسعه نرم‌افزار و وب</span><span class="en-only">Software & Web Dev</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:block w-px h-20 bg-border mx-2"></div>
+                    
+                    <div class="flex flex-col gap-3 flex-1 mt-2 md:mt-0">
+                        <div class="flex items-start gap-2.5">
+                            <i data-lucide="corner-down-left" class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" style="transform: scaleX(var(--rtl-scale, 1));"></i>
+                            <span class="text-sm font-bold text-1">
+                                <span class="fa-only">کار با گروه‌های دانشجویی و پروژه‌های آکادمیک</span>
+                                <span class="en-only">Academic & University Projects</span>
+                            </span>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i data-lucide="corner-down-left" class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" style="transform: scaleX(var(--rtl-scale, 1));"></i>
+                            <span class="text-sm font-bold text-1">
+                                <span class="fa-only">همکاری با انواع شرکت‌های تجاری و B2B</span>
+                                <span class="en-only">B2B & Corporate Collaborations</span>
+                            </span>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i data-lucide="corner-down-left" class="w-5 h-5 text-accent2 mt-0.5 flex-shrink-0" style="transform: scaleX(var(--rtl-scale, 1));"></i>
+                            <span class="text-sm font-bold text-1">
+                                <span class="fa-only">طراحی ساختار و لانچ پروژه‌های استارتاپی</span>
+                                <span class="en-only">Startup Architecture & Launching</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div></section>
+
+    <section id="skills" class="section section--dotted"><div class="container">
+        <div class="section-header reveal">
+            <h2 class="section-title"><span class="fa-only">مهارت‌ها</span><span class="en-only">Skills</span></h2>
+            <span class="section-label">skills</span>
+        </div>
+        <div class="skills-grid" dir="ltr">
+            <div class="skill-card reveal reveal-delay-1"><div class="skill-card-header"><div class="skill-card-icon"><i data-lucide="monitor" style="width:20px;height:20px;color:#fff"></i></div><h3 class="skill-card-title">Frontend</h3></div><div class="skill-list">
+                <div class="skill-item" data-skill="90"><div class="skill-item-info"><span class="skill-item-name">HTML5</span><span class="skill-item-percent">90%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="88"><div class="skill-item-info"><span class="skill-item-name">CSS3 / Tailwind</span><span class="skill-item-percent">88%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="85"><div class="skill-item-info"><span class="skill-item-name">JavaScript / ES6+</span><span class="skill-item-percent">85%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="80"><div class="skill-item-info"><span class="skill-item-name">React / Next.js</span><span class="skill-item-percent">80%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+            </div></div>
+            <div class="skill-card reveal reveal-delay-2"><div class="skill-card-header"><div class="skill-card-icon"><i data-lucide="server" style="width:20px;height:20px;color:#fff"></i></div><h3 class="skill-card-title">Backend & DB</h3></div><div class="skill-list">
+                <div class="skill-item" data-skill="80"><div class="skill-item-info"><span class="skill-item-name">Node.js / Express</span><span class="skill-item-percent">80%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="75"><div class="skill-item-info"><span class="skill-item-name">Python / Django</span><span class="skill-item-percent">75%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="65"><div class="skill-item-info"><span class="skill-item-name">C++</span><span class="skill-item-percent">65%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="72"><div class="skill-item-info"><span class="skill-item-name">PostgreSQL / MongoDB</span><span class="skill-item-percent">72%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+            </div></div>
+            <div class="skill-card reveal reveal-delay-3"><div class="skill-card-header"><div class="skill-card-icon"><i data-lucide="wrench" style="width:20px;height:20px;color:#fff"></i></div><h3 class="skill-card-title">DevOps & Tools</h3></div><div class="skill-list">
+                <div class="skill-item" data-skill="80"><div class="skill-item-info"><span class="skill-item-name">Git / GitHub</span><span class="skill-item-percent">80%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="72"><div class="skill-item-info"><span class="skill-item-name">Docker / CI-CD</span><span class="skill-item-percent">72%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="68"><div class="skill-item-info"><span class="skill-item-name">AWS / Vercel</span><span class="skill-item-percent">68%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+                <div class="skill-item" data-skill="70"><div class="skill-item-info"><span class="skill-item-name">Linux / Bash</span><span class="skill-item-percent">70%</span></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+            </div></div>
+        </div>
+    </div></section>
+
+    <section id="portfolio" class="section section--alt"><div class="container">
+        <div class="section-header reveal">
+            <h2 class="section-title"><span class="fa-only">نمونه کارها</span><span class="en-only">Portfolio</span></h2>
+            <span class="section-label">portfolio</span>
+        </div>
+        
+        <div class="flex flex-col gap-16 md:gap-24">
+            
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 reveal reveal-delay-1">
+                <div tabindex="0" class="portfolio-mockup w-full md:w-7/12 rounded-2xl overflow-hidden shadow-lg border border-border group relative aspect-video bg-bg-2 p-2 flex items-center justify-center">
+                    <img src="photo/portfolio-shop.jpg" alt="نمونه کار فروشگاهی" class="w-full h-full object-contain scale-105 group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <a href="#" class="bg-accent text-white px-5 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-accent-h transition-colors">
+                            <span class="fa-only">مشاهده پروژه</span><span class="en-only">View Project</span> <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-5/12 flex flex-col justify-center">
+                    <div class="text-accent text-sm font-bold font-mono mb-2 uppercase tracking-widest" dir="ltr">E-Commerce</div>
+                    <h3 class="text-2xl md:text-3xl font-black text-1 mb-4">
+                        <span class="fa-only">فروشگاه آنلاین پیشرفته</span><span class="en-only">Advanced Online Store</span>
+                    </h3>
+                    <p class="text-2 text-base leading-relaxed mb-6">
+                        <span class="fa-only">یک پلتفرم کامل فروشگاهی. شامل سیستم سبد خرید حرفه‌ای، درگاه پرداخت، پنل مدیریت پیشرفته برای فروشندگان و طراحی کاملا ریسپانسیو و اپلیکیشنی (PWA).</span>
+                        <span class="en-only">A complete e-commerce platform featuring an advanced cart system, payment gateway, vendor dashboard, and a fully responsive PWA design.</span>
+                    </p>
+                    <div class="flex gap-2 flex-wrap" dir="ltr">
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">React</span>
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">Node.js</span>
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12 reveal reveal-delay-2">
+                <div tabindex="0" class="portfolio-mockup w-full md:w-7/12 rounded-2xl overflow-hidden shadow-lg border border-border group relative aspect-video bg-bg-2 p-2 flex items-center justify-center">
+                    <img src="photo/portfolio-corporate.jpg" alt="سایت شرکتی" class="w-full h-full object-contain scale-105 group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <a href="#" class="bg-accent2 text-white px-5 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-accent2-h transition-colors">
+                            <span class="fa-only">مشاهده پروژه</span><span class="en-only">View Project</span> <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-5/12 flex flex-col justify-center">
+                    <div class="text-accent2 text-sm font-bold font-mono mb-2 uppercase tracking-widest" dir="ltr">Corporate & B2B</div>
+                    <h3 class="text-2xl md:text-3xl font-black text-1 mb-4">
+                        <span class="fa-only">پلتفرم شرکتی و تجاری</span><span class="en-only">Corporate Platform</span>
+                    </h3>
+                    <p class="text-2 text-base leading-relaxed mb-6">
+                        <span class="fa-only">طراحی و پیاده‌سازی وب‌سایت معرفی خدمات شرکت‌های تجاری بزرگ. با تمرکز ویژه بر سئو (SEO)، سرعت بارگذاری فوق‌العاده بالا و رابط کاربری کاملا رسمی و قابل اعتماد.</span>
+                        <span class="en-only">Designing and implementing websites for corporate services. Focused heavily on SEO, ultra-fast loading speeds, and a formal, trustworthy UI.</span>
+                    </p>
+                    <div class="flex gap-2 flex-wrap" dir="ltr">
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">Next.js</span>
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">Tailwind</span>
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 reveal reveal-delay-3">
+                <div tabindex="0" class="portfolio-mockup w-full md:w-7/12 rounded-2xl overflow-hidden shadow-lg border border-border group relative aspect-video bg-bg-2 p-2 flex items-center justify-center">
+                    <img src="photo/portfolio-startup.jpg" alt="پروژه استارتاپی" class="w-full h-full object-contain scale-105 group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <a href="#" class="bg-accent text-white px-5 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-accent-h transition-colors">
+                            <span class="fa-only">مشاهده پروژه</span><span class="en-only">View Project</span> <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-5/12 flex flex-col justify-center">
+                    <div class="text-accent text-sm font-bold font-mono mb-2 uppercase tracking-widest" dir="ltr">Startup MVP</div>
+                    <h3 class="text-2xl md:text-3xl font-black text-1 mb-4">
+                        <span class="fa-only">اپلیکیشن تحت وب استارتاپی</span><span class="en-only">Startup Web App</span>
+                    </h3>
+                    <p class="text-2 text-base leading-relaxed mb-6">
+                        <span class="fa-only">ساخت محصول اولیه (MVP) برای لانچ سریع استارتاپ‌ها با قابلیت مقیاس‌پذیری بالا. شامل داشبورد کاربری اختصاصی، چت آنلاین و اتصال امن به سرویس‌های ابری.</span>
+                        <span class="en-only">Building MVPs for rapid startup launches with high scalability. Includes custom dashboards, live chat, and secure cloud integrations.</span>
+                    </p>
+                    <div class="flex gap-2 flex-wrap" dir="ltr">
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">Vue.js</span>
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">FastAPI</span>
+                        <span class="text-xs bg-bg-card border border-border px-3 py-1.5 rounded-lg font-mono text-3">AWS</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div></section>
+
+    <section id="experience" class="section section--dotted"><div class="container container--narrow">
+        <div class="section-header reveal">
+            <h2 class="section-title"><span class="fa-only">سوابق حرفه‌ای</span><span class="en-only">Experience</span></h2>
+            <span class="section-label">experience</span>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item reveal reveal-delay-1"><div class="timeline-dot"></div><div class="timeline-card"><div class="timeline-card-header"><h3 class="timeline-card-title"><span class="fa-only">توسعه‌دهنده فول‌استک</span><span class="en-only">Full-Stack Developer</span></h3><span class="timeline-badge timeline-badge--active"><span class="fa-only">فعال</span><span class="en-only">Present</span></span></div><p class="timeline-company" dir="ltr">Freelance | 2023 - Present</p><p class="timeline-desc"><span class="fa-only">طراحی و توسعه اپلیکیشن‌های وب سفارشی برای مشتریان. ساخت فروشگاه آنلاین، پنل‌های مدیریتی و ابزارهای SaaS.</span><span class="en-only">Designing and developing custom web applications. Building online stores, admin panels, and SaaS tools.</span></p></div></div>
+            <div class="timeline-item reveal reveal-delay-2"><div class="timeline-dot"></div><div class="timeline-card"><h3 class="timeline-card-title"><span class="fa-only">توسعه‌دهنده وب</span><span class="en-only">Web Developer</span></h3><p class="timeline-company" dir="ltr">University Team | 2022 - 2023</p><p class="timeline-desc"><span class="fa-only">همکاری در توسعه پلتفرم‌های آموزش آنلاین. پیاده‌سازی سیستم احراز هویت، مدیریت دوره‌ها و پرداخت آنلاین.</span><span class="en-only">Collaborated on e-learning platforms. Implemented auth systems, course management, and payments.</span></p></div></div>
+            <div class="timeline-item reveal reveal-delay-3"><div class="timeline-dot"></div><div class="timeline-card"><h3 class="timeline-card-title"><span class="fa-only">کارآموز توسعه وب</span><span class="en-only">Web Dev Intern</span></h3><p class="timeline-company" dir="ltr">Learning Path | 2021 - 2022</p><p class="timeline-desc"><span class="fa-only">یادگیری اصول برنامه‌نویسی وب از صفر: HTML، CSS، JavaScript و سپس React و Node.js.</span><span class="en-only">Learning web fundamentals from scratch: HTML, CSS, JS, and later React & Node.js.</span></p></div></div>
+        </div>
+    </div></section>
+
+    <section id="blog" class="section section--alt"><div class="container">
+        <div class="section-header reveal">
+            <h2 class="section-title"><span class="fa-only">بلاگ</span><span class="en-only">Blog</span></h2>
+            <span class="section-label">blog</span>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card reveal reveal-delay-1" onclick="openBlog(0)"><div class="blog-card-image"><img src="photo/blog-react.jpg" alt="React 19" loading="lazy"></div><div class="blog-card-body"><div class="blog-card-meta"><span class="blog-card-tag">React</span><span class="blog-card-date fa-only">خرداد ۱۴۰۴</span></div><h3 class="blog-card-title">React 19: چه تغییراتی می‌آید؟</h3><p class="blog-card-excerpt">بررسی کامل ویژگی‌های جدید React 19 شامل Server Components و...</p><span class="blog-card-link"><span class="fa-only">ادامه مطلب</span><span class="en-only">Read More</span> <i data-lucide="arrow-left" style="width:14px;height:14px"></i></span></div></div>
+            <div class="blog-card reveal reveal-delay-2" onclick="openBlog(1)"><div class="blog-card-image"><img src="photo/blog-docker.jpg" alt="Docker" loading="lazy"></div><div class="blog-card-body"><div class="blog-card-meta"><span class="blog-card-tag">DevOps</span><span class="blog-card-date fa-only">اردیبهشت ۱۴۰۴</span></div><h3 class="blog-card-title">راهنمای عملی Docker برای توسعه‌دهندگان</h3><p class="blog-card-excerpt">از نصب تا دیپلوی: چطور Docker را در پروژه‌های واقعی استفاده کنیم؟</p><span class="blog-card-link"><span class="fa-only">ادامه مطلب</span><span class="en-only">Read More</span> <i data-lucide="arrow-left" style="width:14px;height:14px"></i></span></div></div>
+            <div class="blog-card reveal reveal-delay-3" onclick="openBlog(2)"><div class="blog-card-image"><img src="photo/blog-ts.jpg" alt="TypeScript" loading="lazy"></div><div class="blog-card-body"><div class="blog-card-meta"><span class="blog-card-tag">TypeScript</span><span class="blog-card-date fa-only">فروردین ۱۴۰۴</span></div><h3 class="blog-card-title">چرا TypeScript استاندارد صنعت شده؟</h3><p class="blog-card-excerpt">آمارها نشان می‌دهد بیش از ۷۸٪ پروژه‌های جدید از TypeScript استفاده می‌کنند...</p><span class="blog-card-link"><span class="fa-only">ادامه مطلب</span><span class="en-only">Read More</span> <i data-lucide="arrow-left" style="width:14px;height:14px"></i></span></div></div>
+            <div class="blog-card reveal reveal-delay-1" onclick="openBlog(3)"><div class="blog-card-image"><img src="photo/blog-nextjs.jpg" alt="Next.js" loading="lazy"></div><div class="blog-card-body"><div class="blog-card-meta"><span class="blog-card-tag">Next.js</span><span class="blog-card-date fa-only">اسفند ۱۴۰۳</span></div><h3 class="blog-card-title">Next.js 15 vs Remix: کدام را انتخاب کنم؟</h3><p class="blog-card-excerpt">مقایسه عملکردی و معماری دو فریمورک محبوب جاوااسکریپت در سال ۲۰۲۵...</p><span class="blog-card-link"><span class="fa-only">ادامه مطلب</span><span class="en-only">Read More</span> <i data-lucide="arrow-left" style="width:14px;height:14px"></i></span></div></div>
+            <div class="blog-card reveal reveal-delay-2" onclick="openBlog(4)"><div class="blog-card-image"><img src="photo/blog-python.jpg" alt="Python" loading="lazy"></div><div class="blog-card-body"><div class="blog-card-meta"><span class="blog-card-tag">Python</span><span class="blog-card-date fa-only">بهمن ۱۴۰۳</span></div><h3 class="blog-card-title">۱۰ کتابخانه پایتون که باید بشناسید</h3><p class="blog-card-excerpt">از FastAPI تا Pydantic: معرفی پرکاربردترین کتابخانه‌های پایتون در ۲۰۲۵...</p><span class="blog-card-link"><span class="fa-only">ادامه مطلب</span><span class="en-only">Read More</span> <i data-lucide="arrow-left" style="width:14px;height:14px"></i></span></div></div>
+            <div class="blog-card reveal reveal-delay-3" onclick="openBlog(5)"><div class="blog-card-image"><img src="photo/blog-ai.jpg" alt="AI" loading="lazy"></div><div class="blog-card-body"><div class="blog-card-meta"><span class="blog-card-tag">AI</span><span class="blog-card-date fa-only">دی ۱۴۰۳</span></div><h3 class="blog-card-title">تأثیر هوش مصنوعی بر شغل برنامه‌نویسی</h3><p class="blog-card-excerpt">آیا Copilot و ChatGPT واقعاً جایگزین برنامه‌نویسان می‌شوند؟</p><span class="blog-card-link"><span class="fa-only">ادامه مطلب</span><span class="en-only">Read More</span> <i data-lucide="arrow-left" style="width:14px;height:14px"></i></span></div></div>
+        </div>
+    </div></section>
+
+    <section id="contact" class="section section--dotted"><div class="container">
+        <div class="section-header reveal">
+            <h2 class="section-title"><span class="fa-only">تماس با ما</span><span class="en-only">Contact Us</span></h2>
+            <span class="section-label">contact</span>
+        </div>
+        <div class="contact-section-inner">
+            
+            <div class="contact-details">
+                <p class="reveal reveal-delay-1 contact-info-text text-center" style="max-width: 650px; margin: 0 auto 30px; text-align: center;">
+                    <span class="fa-only">اگر پروژه‌ای در ذهن دارید، نیاز به مشاوره فنی دارید یا به دنبال همکاری هستید، از طریق راه‌های زیر با ما در ارتباط باشید.</span>
+                    <span class="en-only">If you have a project in mind, need technical consultation, or are looking for collaboration, feel free to contact us.</span>
+                </p>
+                <div class="contact-channels-grid">
+                    <a href="tel:09030181884" class="contact-channel reveal reveal-delay-2"><i data-lucide="phone" style="width:20px;height:20px;color:var(--accent)"></i> <span dir="ltr">09030181884</span></a>
+                    <a href="mailto:info@mrsharif.dev" class="contact-channel reveal reveal-delay-3"><i data-lucide="mail" style="width:20px;height:20px;color:var(--accent)"></i> <span dir="ltr">info@mrsharif.dev</span></a>
+                    <a href="#" class="contact-channel reveal reveal-delay-4"><i data-lucide="send" style="width:20px;height:20px;color:#0088cc"></i> <span dir="ltr">@mrsharif_dev</span></a>
+                    <a href="#" class="contact-channel reveal reveal-delay-5"><i data-lucide="github" style="width:20px;height:20px;color:var(--text-1)"></i> <span dir="ltr">github.com/mrsharif</span></a>
+                </div>
+            </div>
+            
+            <div class="achievements-section reveal reveal-delay-3">
+                <h3 style="margin-bottom:34px; font-size:1.1rem; color:var(--text-1); font-weight:700; text-align:center; position:relative; z-index:2;">Specialties & Technologies</h3>
+                
+                <div class="marquee-wrapper" dir="ltr">
+                    <div class="marquee-group">
+                        <div class="marquee-item"><i data-lucide="bot" style="color:var(--accent2); width:22px; height:22px;"></i> Robotics Competitions</div>
+                        <div class="marquee-item"><i data-lucide="layout-template" style="color:var(--accent); width:22px; height:22px;"></i> UI/UX Design</div>
+                        <div class="marquee-item"><i data-lucide="file-code-2" style="color:#e34f26; width:22px; height:22px;"></i> HTML5 & CSS3</div>
+                        <div class="marquee-item"><i data-lucide="code-2" style="color:#f7df1e; width:22px; height:22px;"></i> JavaScript (ES6+)</div>
+                        <div class="marquee-item"><i data-lucide="server" style="color:#4caf50; width:22px; height:22px;"></i> Node.js & Express</div>
+                        <div class="marquee-item"><i data-lucide="terminal-square" style="color:#3776ab; width:22px; height:22px;"></i> Python Development</div>
+                        <div class="marquee-item"><i data-lucide="database" style="color:var(--accent); width:22px; height:22px;"></i> Full-Stack Solutions</div>
+                    </div>
+                    <div class="marquee-group">
+                        <div class="marquee-item"><i data-lucide="bot" style="color:var(--accent2); width:22px; height:22px;"></i> Robotics Competitions</div>
+                        <div class="marquee-item"><i data-lucide="layout-template" style="color:var(--accent); width:22px; height:22px;"></i> UI/UX Design</div>
+                        <div class="marquee-item"><i data-lucide="file-code-2" style="color:#e34f26; width:22px; height:22px;"></i> HTML5 & CSS3</div>
+                        <div class="marquee-item"><i data-lucide="code-2" style="color:#f7df1e; width:22px; height:22px;"></i> JavaScript (ES6+)</div>
+                        <div class="marquee-item"><i data-lucide="server" style="color:#4caf50; width:22px; height:22px;"></i> Node.js & Express</div>
+                        <div class="marquee-item"><i data-lucide="terminal-square" style="color:#3776ab; width:22px; height:22px;"></i> Python Development</div>
+                        <div class="marquee-item"><i data-lucide="database" style="color:var(--accent); width:22px; height:22px;"></i> Full-Stack Solutions</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div></section>
+</main>
+
+<footer class="footer"><div class="container">
+    <div class="footer-inner">
+        <p class="footer-text">
+            <span class="fa-only">© ۱۴۰۴ گروه برنامه‌نویسی Mr.Sharif — تمامی حقوق محفوظ است.</span>
+            <span class="en-only">© 2026 Mr.Sharif Programming Group — All rights reserved.</span>
+        </p>
+        <div class="footer-socials">
+            <a href="tel:09030181884" aria-label="Phone"><i data-lucide="phone" style="width:18px;height:18px"></i></a>
+            <a href="#" aria-label="GitHub"><i data-lucide="github" style="width:18px;height:18px"></i></a>
+            <a href="#" aria-label="Telegram"><i data-lucide="send" style="width:18px;height:18px"></i></a>
+            <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:18px;height:18px"></i></a>
+        </div>
+    </div>
+</div></footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0})" aria-label="بازگشت به بالا"><i data-lucide="arrow-up" style="width:20px;height:20px"></i></button>
+
+<script>
+const blogData=[
+{tag:'React',date:'خرداد ۱۴۰۴',img:'photo/blog-react.jpg',title:'React 19: چه تغییراتی می‌آید؟',body:`<p>React 19 یکی از بزرگ‌ترین آپدیت‌های تاریخ React است. در این نسخه، تیم React تمرکز خود را روی بهبود تجربه توسعه‌دهنده و عملکرد گذاشته است.</p><h3>Server Components به صورت رسمی</h3><p>Server Components که قبلاً فقط در Next.js موجود بود، حالا بخش رسمی React شده. این یعنی می‌تونید کامپوننت‌هایی بنویسید که فقط روی سرور اجرا می‌شن و هیچ JavaScript‌ای به کلاینت نمی‌فرستن. نتیجه؟ باندل کوچکتر و لود سریعتر.</p><h3>انتقال خودکار State</h3><p>یکی از مشکلات قدیمی React این بود که وقتی state یک کامپوننت بالایی تغییر می‌کرد، state فرزندها ریست می‌شد. React 19 این مشکل را با useActionState حل کرده.</p><pre>function Form() {\n  const [state, formAction] = useActionState(async (prev, formData) => {\n    const name = formData.get('name');\n    return { success: true, name };\n  }, { success: false });\n  return <form action={formAction}>...</form>;\n}</pre><h3>کتابخانه جدید use()</h3><p>با use() می‌تونید مستقیماً Promise‌ها و Context رو در رندر بخونید بدون نیاز به useEffect یا Suspense.</p><h3>Document Metadata</h3><p>دیگه نیازی به react-helmet نیست! الان می‌تونید title و meta رو مستقیماً داخل کامپوننت‌ها بنویسید.</p><h3>پیشنهاد ما</h3><p>اگه پروژه جدیدی شروع می‌کنید، حتماً React 19 رو در نظر بگیرید. اما برای پروژه‌های موجود، صبور باشید تا اکوسیستم کتابخانه‌ها آپدیت بشن.</p>`},
+{tag:'DevOps',date:'اردیبهشت ۱۴۰۴',img:'photo/blog-docker.jpg',title:'راهنمای عملی Docker برای توسعه‌دهندگان',body:`<p>Docker یکی از مهم‌ترین ابزارهای دنیای توسعه نرم‌افزار شده. در این مقاله بصورت عملی یاد می‌گیرید چطور از Docker در پروژه‌هاتون استفاده کنید.</p><h3>Docker چیست؟</h3><p>Docker یک پلتفرم containerization هست که اجازه می‌ده اپلیکیشن‌تون رو همراه با تمام وابستگی‌هاش در یک container بسته‌بندی کنید. این یعنی دیگه مشکل "روی سیستم من کار می‌کنه!" نداریم.</p><h3>نوشتن اولین Dockerfile</h3><pre>FROM node:20-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nEXPOSE 3000\nCMD ["node", "server.js"]</pre><h3>Docker Compose برای پروژه‌های واقعی</h3><p>وقتی پروژه‌تون چند سرویس داره، Docker Compose بهترین ابزاره:</p><pre>version: '3.8'\nservices:\n  app:\n    build: .\n    ports: ["3000:3000"]\n    depends_on: [db]\n  db:\n    image: postgres:16\n    environment:\n      POSTGRES_DB: myapp\n      POSTGRES_PASSWORD: secret\n    volumes: ["pgdata:/var/lib/postgresql/data"]\nvolumes:\n  pgdata:</pre><h3>نکات طلایی</h3><ul><li><strong>از Alpine images</strong> استفاده کنید تا سایز ایمیج کم بشه</li><li><strong>.dockerignore</strong> بسازید و node_modules رو اضافه کنید</li><li><strong>Multi-stage build</strong> برای کاهش سایز نهایی استفاده کنید</li><li><strong>هرگز</strong> پسورد و سکرت رو داخل Dockerfile ننویسید</li></ul>`},
+{tag:'TypeScript',date:'فروردین ۱۴۰۴',img:'photo/blog-ts.jpg',title:'چرا TypeScript استاندارد صنعت شده؟',body:`<p>طبق نظرسنجی Stack Overflow 2024، بیش از ۷۸٪ توسعه‌دهندگان جاوااسکریپت از TypeScript استفاده می‌کنن. اما چرا این رشد سریع؟</p><h3>مشکلات جاوااسکریپت خالص</h3><p>جاوااسکریپت یک زبان dynamically typed هست. این یعنی تا زمان اجرا متوجه اشتباهات نوعی نمی‌شید:</p><pre>function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}\n// خطا! اگر item.price رشته باشه، "10" + "20" = "1020"</pre><h3>TypeScript چطور حل می‌کنه؟</h3><pre>interface Item {\n  name: string;\n  price: number;\n  quantity: number;\n}\nfunction calculateTotal(items: Item[]): number {\n  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);\n}</pre><p>حالا اگر کسی رشته بفرستد به جای عدد، قبل از اجرا خطا می‌گیرید.</p><h3>مزایای عملی</h3><ul><li><strong>Auto-complete بهتر</strong> در VS Code — IDE دقیقاً می‌دونه چه پراپرتی‌هایی موجوده</li><li><strong>Refactoring امن</strong> — تغییر نام یک متغیر در کل پروژه بدون ترس از باگ</li><li><strong>مستندسازی خودکار</strong> — تایپ‌ها بهترین مستندات کدن</li><li><strong>کد تمیزتر</strong> — تیم را مجبور به نوشتن ساختارهای منظم‌تر می‌کند</li></ul>`},
+{tag:'Next.js',date:'اسفند ۱۴۰۳',img:'photo/blog-nextjs.jpg',title:'Next.js 15 vs Remix: کدام را انتخاب کنم؟',body:`<p>در سال ۲۰۲۵، دو فریمورک اصلی برای ساخت اپلیکیشن‌های React داریم: Next.js و Remix. بیایید واقع‌بینانه مقایسه کنیم.</p><h3>Next.js 15</h3><p>نسخه ۱۵ Next.js با Turbopack (بندلر جدید)، افزایش سرعت build تا ۹۶٪ و بهبود Cache رفتار پیش‌فرض اومده.</p><p><strong>مزایا:</strong> اکوسیستم عظیم، مستندات کامل، حمایت Vercel، Server Actions فوق‌العاده سریع</p><p><strong>معایب:</strong> پیچیدگی سیستم Caching، حجم بزرگ فریمورک</p><h3>Remix</h3><p>Remix روی فلسفه استانداردهای وب بنا شده. پترن loader و action بسیار تمیزی داره و درکش ساده‌ست.</p><p><strong>مزایا:</strong> سادگی، progressive enhancement، nested routing عالی، magic کمتر</p><p><strong>معایب:</strong> اکوسیستم کوچکتر، منابع آموزشی کمتر نسبت به Next.js</p><h3>نتیجه‌گیری ما</h3><p>برای بیشتر پروژه‌ها، Next.js 15 انتخاب منطقی‌تری است چون اکوسیستم بزرگتر و پشتیبانی بیشتری دارد. اما اگر پروژه‌تان ساده است و می‌خواهید کنترل کامل داشته باشید، Remix ارزش امتحان کردن را دارد.</p>`},
+{tag:'Python',date:'بهمن ۱۴۰۳',img:'photo/blog-python.jpg',title:'۱۰ کتابخانه پایتون که باید بشناسید',body:`<p>پایتون در سال ۲۰۲۵ قوی‌تر از همیشه هست. این ۱۰ کتابخانه رو باید برای توسعه مدرن بشناسید:</p><h3>۱. FastAPI — فریمورک وب مدرن</h3><p>سریع‌ترین فریمورک پایتون برای ساخت API. با Type Hints و Pydantic، اتوماتیک داکیومنت Swagger می‌سازه.</p><pre>from fastapi import FastAPI\napp = FastAPI()\n@app.get("/items/{item_id}")\nasync def read_item(item_id: int, q: str = None):\n    return {"item_id": item_id, "q": q}</pre><h3>۲. Pydantic — اعتبارسنجی داده</h3><p>بهترین ابزار برای validate کردن داده‌ها. هم در FastAPI استفاده میشه هم به صورت مستقل در پروژه‌های دیتاساینس.</p><h3>۳. SQLAlchemy 2.0 — ORM</h3><p>نسخه ۲.۰ با API جدید و Type-safe اومده. دیگه نیازی به legacy Session API نیست.</p><h3>سایر ابزارهای ضروری</h3><ul><li><strong>4. httpx</strong> — جایگزین مدرن برای requests با پشتیبانی async</li><li><strong>5. Rich</strong> — ساخت ابزارهای CLI حرفه‌ای با ترمینال زیبا</li><li><strong>6. Polars</strong> — جایگزین فوق‌سریع برای Pandas (نوشته شده با Rust)</li><li><strong>7. Typer</strong> — ساخت CLI ساده و سریع بر پایه Type hints</li><li><strong>8. Celery</strong> — Task Queue قدرتمند برای کارهای پس‌زمینه</li><li><strong>9. Pytest</strong> — استاندارد طلایی تست‌نویسی در پایتون</li><li><strong>10. Ruff</strong> — Linter و Formatter بی‌نهایت سریع (نوشته شده با Rust)</li></ul>`},
+{tag:'AI',date:'دی ۱۴۰۳',img:'photo/blog-ai.jpg',title:'تأثیر هوش مصنوعی بر شغل برنامه‌نویسی',body:`<p>با عرضه ابزارهایی مثل GitHub Copilot، ChatGPT، Claude و IDE هایی مثل Cursor، سؤال بزرگی مطرح شده: آیا برنامه‌نویسان بیکار می‌شن؟</p><h3>واقعیت آماری</h3><p>طبق گزارش GitHub، توسعه‌دهندگانی که از Copilot استفاده می‌کنن، تا ۵۵٪ سریعتر کد می‌نویسن. اما این یعنی نیازی به برنامه‌نویس نیست؟ قطعاً خیر.</p><h3>چرا AI جایگزین انسان نمیشه؟</h3><ul><li><strong>درک نیازمندی‌های بیزینس:</strong> هوش مصنوعی نمی‌تونه جلسات با مشتری رو مدیریت کنه و بفهمه اونا "واقعاً" چی می‌خوان.</li><li><strong>معماری سیستم‌های بزرگ:</strong> طراحی microservices، انتخاب دیتابیس مناسب، مدیریت Scale — این‌ها هنوز هنر انسانیه.</li><li><strong>دیباگ منطقی پیچیده:</strong> وقتی باگ در لایه منطق بیزینس و معماری هست، AI کمکی نمی‌کنه.</li><li><strong>امنیت:</strong> AI ممکن است کدهای آسیب‌پذیر تولید کنه. بازبینی امنیتی هنوز وظیفه قطعی یک انسانه.</li></ul><h3>آنچه واقعاً در حال تغییر است</h3><p>نقش برنامه‌نویس از یک "کدنویس (Coder)" صرف به "معمار نرم‌افزار و حل‌کننده مسئله" تغییر می‌کنه. کسی که فقط Syntax بلده، در خطره. اما کسی که می‌دونه چطور قطعات سیستم رو به هم وصل کنه تا یک مشکل تجاری حل بشه، ارزشش چندین برابر شده.</p><h3>پیشنهاد عملی</h3><p>هوش مصنوعی رو به عنوان یک ابزار قدرتمند ببینید، نه یک رقیب ترسناک. از Copilot برای نوشتن کدهای تکراری (Boilerplate) استفاده کنید و وقت آزاد شده رو صرف یادگیری معماری، سیستم‌دیزاین و مهارت‌های نرم کنید. در دنیای جدید، برنامه‌نویسانی که بلدند از AI خوب استفاده کنند، جایگزین کسانی می‌شوند که از آن استفاده نمی‌کنند.</p>`}
+];
+
+// توابع دو زبانه (Language Toggle)
+function toggleLang() {
+    const html = document.documentElement;
+    const body = document.body;
+    if(html.getAttribute('lang') === 'fa') {
+        html.setAttribute('lang', 'en');
+        html.setAttribute('dir', 'ltr');
+        body.classList.remove('lang-fa-active');
+        body.classList.add('lang-en-active');
+        document.documentElement.style.setProperty('--rtl-scale', '-1');
+    } else {
+        html.setAttribute('lang', 'fa');
+        html.setAttribute('dir', 'rtl');
+        body.classList.remove('lang-en-active');
+        body.classList.add('lang-fa-active');
+        document.documentElement.style.setProperty('--rtl-scale', '1');
+    }
+}
+
+function toggleMobile(){document.getElementById('mobileMenu').classList.add('open')}
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open')}
+
+function openBlog(i){
+    const b=blogData[i];
+    document.getElementById('modalImg').src=b.img;
+    document.getElementById('modalTag').textContent=b.tag;
+    document.getElementById('modalTitle').textContent=b.title;
+    
+    const isEn = document.documentElement.getAttribute('lang') === 'en';
+    document.getElementById('modalDate').textContent= isEn ? b.tag : b.date;
+    
+    document.getElementById('modalBody').innerHTML=b.body;
+    
+    const modalOverlay = document.getElementById('blogModal');
+    modalOverlay.classList.add('open');
+    document.body.style.overflow='hidden';
+    document.querySelector('.blog-modal-content').scrollTop = 0;
+}
+function closeBlogModal(e){
+    if(e&&e.target!==e.currentTarget)return;
+    document.getElementById('blogModal').classList.remove('open');
+    document.body.style.overflow='';
+}
+
+document.querySelectorAll('.theme-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.documentElement.setAttribute('data-theme',btn.dataset.themeTarget);
+    });
+});
+
+function initCodeRain(){
+    if(window.innerWidth <= 768) return; 
+    const c=document.getElementById('codeRain');
+    if(!c) return;
+    const ctx=c.getContext('2d');
+    c.width=window.innerWidth;c.height=window.innerHeight;
+    const chars='01{}[]<>/=;:'.split('');
+    const fs=16,cols=Math.floor(c.width/fs),drops=Array(cols).fill(1);
+    function draw(){
+        const theme = document.documentElement.getAttribute('data-theme');
+        let fadeColor = 'rgba(10,10,10,0.1)';
+        if(theme === 'light') fadeColor = 'rgba(250,250,250,0.15)';
+        if(theme === 'neon') fadeColor = 'rgba(5,5,16,0.1)';
+        
+        ctx.fillStyle=fadeColor;
+        ctx.fillRect(0,0,c.width,c.height);
+        ctx.fillStyle='rgba(59,130,246,0.4)';ctx.font=fs+'px Space Mono';
+        for(let i=0;i<drops.length;i++){
+            ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*fs,drops[i]*fs);
+            if(drops[i]*fs>c.height&&Math.random()>0.975)drops[i]=0;drops[i]++;
+        }
+    }
+    setInterval(draw,60);
+    window.addEventListener('resize',()=>{c.width=window.innerWidth;c.height=window.innerHeight});
+}
+
+function initMouseGlow(){
+    if(window.innerWidth<=768)return;
+    const g1=document.getElementById('mouseGlow'),g2=document.getElementById('mouseGlow2');
+    if(!g1 || !g2) return;
+    document.getElementById('hero').addEventListener('mousemove',e=>{
+        g1.style.left=e.clientX+'px';g1.style.top=e.clientY+'px';
+        g2.style.left=(e.clientX+80)+'px';g2.style.top=(e.clientY+60)+'px';
+    });
+}
+
+function initTyping(){
+    const textsFa=['توسعه وب حرفه‌ای','طراحی رابط کاربری','برنامه‌نویسی بک‌اند','ساخت اپلیکیشن SaaS','حل مسئله با کد'];
+    const textsEn=['Professional Web Dev','UI/UX Design','Backend Engineering','SaaS Applications','Problem Solving with Code'];
+    let ti=0,ci=0,deleting=false;const el=document.getElementById('typingText');
+    if(!el) return;
+    function type(){
+        const isEn = document.documentElement.getAttribute('lang') === 'en';
+        const currentArr = isEn ? textsEn : textsFa;
+        const current = currentArr[ti % currentArr.length];
+        
+        el.textContent=current.substring(0,ci);
+        if(!deleting){ci++;if(ci>current.length){deleting=true;setTimeout(type,1500);return}}
+        else{ci--;if(ci<0){deleting=false;ti=(ti+1)%currentArr.length;ci=0;setTimeout(type,400);return}}
+        setTimeout(type,deleting?40:80);
+    }
+    type();
+}
+
+function initReveal(){
+    const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});},{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+function initCounters(){
+    const obs=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+            if(e.isIntersecting){
+                const el=e.target,target=+el.dataset.count,duration=2000,start=performance.now();
+                function update(now){const p=Math.min((now-start)/duration,1),ease=1-Math.pow(1-p,3);el.textContent=Math.floor(ease*target)+(target>=100?'+':'');if(p<1)requestAnimationFrame(update)}
+                requestAnimationFrame(update);obs.unobserve(el);
+            }
+        });
+    },{threshold:0.5});
+    document.querySelectorAll('[data-count]').forEach(el=>obs.observe(el));
+}
+
+function initSkillBars(){
+    const obs=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+            if(e.isIntersecting){e.target.querySelector('.skill-bar-fill').style.width=e.target.dataset.skill+'%';obs.unobserve(e.target)}
+        });
+    },{threshold:0.3});
+    document.querySelectorAll('.skill-item').forEach(el=>obs.observe(el));
+}
+
+function initNavScroll(){
+    const nav=document.getElementById('navbar'),btn=document.getElementById('backToTop');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                nav.classList.toggle('scrolled', window.scrollY > 50);
+                btn.classList.toggle('show', window.scrollY > 500);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, {passive: true});
+}
+
+window.addEventListener('load', () => {
+    const symbols=['{ }','< />','[ ]','( )','//','&&','||','=>','...','==','!=','++','--','fn','let','const','async','await'];
+    const fs=document.getElementById('floatSymbols');
+    if(fs){
+        for(let i=0;i<15;i++){
+            const s=document.createElement('span');s.className='float-sym';s.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+            s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';s.style.animationDuration=(2+Math.random()*3)+'s';fs.appendChild(s);
+        }
+    }
+    
+    // زمان‌بندی مکعب به حالت اورجینال بازگشت
+    setTimeout(()=>{
+        const cube = document.getElementById('cube');
+        if(cube) cube.classList.add('explode');
+    }, 400);
+    
+    setTimeout(()=>{
+        const entrance = document.getElementById('entrance');
+        const app = document.getElementById('app');
+        if(entrance) entrance.classList.add('hide');
+        if(app) app.style.opacity='1';
+        
+        lucide.createIcons();
+        initCodeRain();
+        initMouseGlow();
+        initTyping();
+        initReveal();
+        initCounters();
+        initSkillBars();
+        initNavScroll();
+    }, 800);
+});
+</script>
+</body>
+</html>
