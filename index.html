@@ -55,7 +55,7 @@
         .nav-logo:hover{opacity:.9}
         
         .nav-logo-wrapper {
-            width: 46px; height: 46px; border-radius: 50%;
+            width: 38px; height: 38px; border-radius: 50%;
             padding: 2px; background: linear-gradient(135deg, var(--accent), var(--accent2));
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -64,14 +64,14 @@
         .nav-logo-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg-card); }
         .nav-logo:hover .nav-logo-wrapper { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 20px var(--accent-glow), 0 0 20px var(--accent2-glow); }
 
-        .nav-logo-name{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.3rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 2px;}
+        .nav-logo-name{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.1rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 2px;}
         .nav-links{display:flex;align-items:center;gap:28px}
         .nav-link{position:relative;color:var(--text-2);font-size:14px;font-weight:500;transition:color .3s;padding:4px 0}
         .nav-link:hover,.nav-link.active{color:var(--accent)}
         .nav-link::after{content:'';position:absolute;bottom:-2px;right:0;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:1px;transition:width .3s cubic-bezier(.4,0,.2,1)}
         .nav-link:hover::after,.nav-link.active::after{width:100%}
         .nav-actions{display:flex;align-items:center;gap:12px}
-        .mobile-menu-btn{display:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-2);cursor:pointer;align-items:center;justify-content:center;transition:all .2s}
+        .mobile-menu-btn{display:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-2);cursor:pointer;align-items:center;justify-content:center;transition:all .2s}
         .mobile-menu-btn:hover{color:var(--text-1);border-color:var(--accent)}
         .theme-toggle{display:flex;gap:4px;padding:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px}
         .theme-btn{width:32px;height:32px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;background:transparent;color:var(--text-3)}
@@ -96,7 +96,7 @@
         .cube-scene{perspective:800px;width:120px;height:120px}
         .cube{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:cubeSpin 1s cubic-bezier(.25,.46,.45,.94) forwards}
         
-        /* انیمیشن باز شدن نرم مکعب به جای انفجار پخش‌شونده */
+        /* انیمیشن باز شدن نرم مکعب */
         .cube.explode .face{transition:transform .8s cubic-bezier(0.2, 0, 0.2, 1), opacity .6s ease-out .2s}
         .cube.explode .face:nth-child(1){transform:translateZ(180px);opacity:0}
         .cube.explode .face:nth-child(2){transform:rotateY(180deg) translateZ(180px);opacity:0}
@@ -468,7 +468,7 @@
         </a>
         <!-- کلید تغییر زبان -->
         <div class="flex" style="margin-top: 2px;">
-            <button onclick="toggleLang()" class="text-[10px] font-mono text-text-3 hover:text-accent transition-colors bg-bg-card border border-border px-2 py-0.5 rounded cursor-pointer mx-14">
+            <button onclick="toggleLang()" class="text-[10px] font-mono text-text-3 hover:text-accent transition-colors bg-bg-card border border-border px-2 py-0.5 rounded cursor-pointer mx-2 md:mx-8">
                 <span class="fa-only">EN Switch</span>
                 <span class="en-only">FA Switch</span>
             </button>
@@ -751,8 +751,8 @@
                 </p>
                 <div class="contact-channels-grid">
                     <a href="tel:09030181884" class="contact-channel reveal reveal-delay-2"><i data-lucide="phone" style="width:20px;height:20px;color:var(--accent)"></i> <span dir="ltr">09030181884</span></a>
-                    <a href="mailto:info@mrsharif.dev" class="contact-channel reveal reveal-delay-3"><i data-lucide="mail" style="width:20px;height:20px;color:var(--accent)"></i> <span dir="ltr">info@mrsharif.dev</span></a>
-                    <a href="#" class="contact-channel reveal reveal-delay-4"><i data-lucide="send" style="width:20px;height:20px;color:#0088cc"></i> <span dir="ltr">@mrsharif_dev</span></a>
+                    <a href="mailto:shryfzadhmjtby383@gmail.com" class="contact-channel reveal reveal-delay-3"><i data-lucide="mail" style="width:20px;height:20px;color:var(--accent)"></i> <span dir="ltr">shryfzadhmjtby383@gmail.com</span></a>
+                    <a href="https://t.me/Mr_Sharif_code" target="_blank" class="contact-channel reveal reveal-delay-4"><i data-lucide="send" style="width:20px;height:20px;color:#0088cc"></i> <span dir="ltr">@Mr_Sharif_code</span></a>
                     <a href="#" class="contact-channel reveal reveal-delay-5"><i data-lucide="github" style="width:20px;height:20px;color:var(--text-1)"></i> <span dir="ltr">github.com/mrsharif</span></a>
                 </div>
             </div>
@@ -795,7 +795,7 @@
         <div class="footer-socials">
             <a href="tel:09030181884" aria-label="Phone"><i data-lucide="phone" style="width:18px;height:18px"></i></a>
             <a href="#" aria-label="GitHub"><i data-lucide="github" style="width:18px;height:18px"></i></a>
-            <a href="#" aria-label="Telegram"><i data-lucide="send" style="width:18px;height:18px"></i></a>
+            <a href="https://t.me/Mr_Sharif_code" target="_blank" aria-label="Telegram"><i data-lucide="send" style="width:18px;height:18px"></i></a>
             <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:18px;height:18px"></i></a>
         </div>
     </div>
@@ -810,7 +810,7 @@ const blogData=[
 {tag:'TypeScript',date:'فروردین ۱۴۰۴',img:'photo/blog-ts.jpg',title:'چرا TypeScript استاندارد صنعت شده؟',body:`<p>طبق نظرسنجی Stack Overflow 2024، بیش از ۷۸٪ توسعه‌دهندگان جاوااسکریپت از TypeScript استفاده می‌کنن. اما چرا این رشد سریع؟</p><h3>مشکلات جاوااسکریپت خالص</h3><p>جاوااسکریپت یک زبان dynamically typed هست. این یعنی تا زمان اجرا متوجه اشتباهات نوعی نمی‌شید:</p><pre>function calculateTotal(items) {\n  return items.reduce((sum, item) => sum + item.price, 0);\n}\n// خطا! اگر item.price رشته باشه، "10" + "20" = "1020"</pre><h3>TypeScript چطور حل می‌کنه؟</h3><pre>interface Item {\n  name: string;\n  price: number;\n  quantity: number;\n}\nfunction calculateTotal(items: Item[]): number {\n  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);\n}</pre><p>حالا اگر کسی رشته بفرستد به جای عدد، قبل از اجرا خطا می‌گیرید.</p><h3>مزایای عملی</h3><ul><li><strong>Auto-complete بهتر</strong> در VS Code — IDE دقیقاً می‌دونه چه پراپرتی‌هایی موجوده</li><li><strong>Refactoring امن</strong> — تغییر نام یک متغیر در کل پروژه بدون ترس از باگ</li><li><strong>مستندسازی خودکار</strong> — تایپ‌ها بهترین مستندات کدن</li><li><strong>کد تمیزتر</strong> — تیم را مجبور به نوشتن ساختارهای منظم‌تر می‌کند</li></ul>`},
 {tag:'Next.js',date:'اسفند ۱۴۰۳',img:'photo/blog-nextjs.jpg',title:'Next.js 15 vs Remix: کدام را انتخاب کنم؟',body:`<p>در سال ۲۰۲۵، دو فریمورک اصلی برای ساخت اپلیکیشن‌های React داریم: Next.js و Remix. بیایید واقع‌بینانه مقایسه کنیم.</p><h3>Next.js 15</h3><p>نسخه ۱۵ Next.js با Turbopack (بندلر جدید)، افزایش سرعت build تا ۹۶٪ و بهبود Cache رفتار پیش‌فرض اومده.</p><p><strong>مزایا:</strong> اکوسیستم عظیم، مستندات کامل، حمایت Vercel، Server Actions فوق‌العاده سریع</p><p><strong>معایب:</strong> پیچیدگی سیستم Caching، حجم بزرگ فریمورک</p><h3>Remix</h3><p>Remix روی فلسفه استانداردهای وب بنا شده. پترن loader و action بسیار تمیزی داره و درکش ساده‌ست.</p><p><strong>مزایا:</strong> سادگی، progressive enhancement، nested routing عالی، magic کمتر</p><p><strong>معایب:</strong> اکوسیستم کوچکتر، منابع آموزشی کمتر نسبت به Next.js</p><h3>نتیجه‌گیری ما</h3><p>برای بیشتر پروژه‌ها، Next.js 15 انتخاب منطقی‌تری است چون اکوسیستم بزرگتر و پشتیبانی بیشتری دارد. اما اگر پروژه‌تان ساده است و می‌خواهید کنترل کامل داشته باشید، Remix ارزش امتحان کردن را دارد.</p>`},
 {tag:'Python',date:'بهمن ۱۴۰۳',img:'photo/blog-python.jpg',title:'۱۰ کتابخانه پایتون که باید بشناسید',body:`<p>پایتون در سال ۲۰۲۵ قوی‌تر از همیشه هست. این ۱۰ کتابخانه رو باید برای توسعه مدرن بشناسید:</p><h3>۱. FastAPI — فریمورک وب مدرن</h3><p>سریع‌ترین فریمورک پایتون برای ساخت API. با Type Hints و Pydantic، اتوماتیک داکیومنت Swagger می‌سازه.</p><pre>from fastapi import FastAPI\napp = FastAPI()\n@app.get("/items/{item_id}")\nasync def read_item(item_id: int, q: str = None):\n    return {"item_id": item_id, "q": q}</pre><h3>۲. Pydantic — اعتبارسنجی داده</h3><p>بهترین ابزار برای validate کردن داده‌ها. هم در FastAPI استفاده میشه هم به صورت مستقل در پروژه‌های دیتاساینس.</p><h3>۳. SQLAlchemy 2.0 — ORM</h3><p>نسخه ۲.۰ با API جدید و Type-safe اومده. دیگه نیازی به legacy Session API نیست.</p><h3>سایر ابزارهای ضروری</h3><ul><li><strong>4. httpx</strong> — جایگزین مدرن برای requests با پشتیبانی async</li><li><strong>5. Rich</strong> — ساخت ابزارهای CLI حرفه‌ای با ترمینال زیبا</li><li><strong>6. Polars</strong> — جایگزین فوق‌سریع برای Pandas (نوشته شده با Rust)</li><li><strong>7. Typer</strong> — ساخت CLI ساده و سریع بر پایه Type hints</li><li><strong>8. Celery</strong> — Task Queue قدرتمند برای کارهای پس‌زمینه</li><li><strong>9. Pytest</strong> — استاندارد طلایی تست‌نویسی در پایتون</li><li><strong>10. Ruff</strong> — Linter و Formatter بی‌نهایت سریع (نوشته شده با Rust)</li></ul>`},
-{tag:'AI',date:'دی ۱۴۰۳',img:'photo/blog-ai.jpg',title:'تأثیر هوش مصنوعی بر شغل برنامه‌نویسی',body:`<p>با عرضه ابزارهایی مثل GitHub Copilot، ChatGPT، Claude و IDE هایی مثل Cursor، سؤال بزرگی مطرح شده: آیا برنامه‌نویسان بیکار می‌شن؟</p><h3>واقعیت آماری</h3><p>طبق گزارش GitHub، توسعه‌دهندگانی که از Copilot استفاده می‌کنن، تا ۵۵٪ سریعتر کد می‌نویسن. اما این یعنی نیازی به برنامه‌نویس نیست؟ قطعاً خیر.</p><h3>چرا AI جایگزین انسان نمیشه؟</h3><ul><li><strong>درک نیازمندی‌های بیزینس:</strong> هوش مصنوعی نمی‌تونه جلسات با مشتری رو مدیریت کنه و بفهمه اونا "واقعاً" چی می‌خوان.</li><li><strong>معماری سیستم‌های بزرگ:</strong> طراحی microservices، انتخاب دیتابیس مناسب، مدیریت Scale — این‌ها هنوز هنر انسانیه.</li><li><strong>دیباگ منطقی پیچیده:</strong> وقتی باگ در لایه منطق بیزینس و معماری هست، AI کمکی نمی‌کنه.</li><li><strong>امنیت:</strong> AI ممکن است کدهای آسیب‌پذیر تولید کنه. بازبینی امنیتی هنوز وظیفه قطعی یک انسانه.</li></ul><h3>آنچه واقعاً در حال تغییر است</h3><p>نقش برنامه‌نویس از یک "کدنویس (Coder)" صرف به "معمار نرم‌افزار و حل‌کننده مسئله" تغییر می‌کنه. کسی که فقط Syntax بلده، در خطره. اما کسی که می‌دونه چطور قطعات سیستم رو به هم وصل کنه تا یک مشکل تجاری حل بشه، ارزشش چندین برابر شده.</p><h3>پیشنهاد عملی</h3><p>هوش مصنوعی رو به عنوان یک ابزار قدرتمند ببینید، نه یک رقیب ترسناک. از Copilot برای نوشتن کدهای تکراری (Boilerplate) استفاده کنید و وقت آزاد شده رو صرف یادگیری معماری، سیستم‌دیزاین و مهارت‌های نرم کنید. در دنیای جدید، برنامه‌نویسانی که بلدند از AI خوب استفاده کنند، جایگزین کسانی می‌شوند که از آن استفاده نمی‌کنند.</p>`}
+{tag:'AI',date:'دی ۱۴۰۳',img:'photo/blog-ai.jpg',title:'تأثیر هوش مصنوعی بر شغل برنامه‌نویسی',body:`<p>با عرضه ابزارهایی مثل GitHub Copilot، ChatGPT، Claude و IDE هایی مثل Cursor، سؤال بزرگی مطرح شده: آیا برنامه‌نویسان بیکار می‌شن؟</p><h3>واقعیت آماری</h3><p>طبق گزارش GitHub، توسعه‌دهندگانی که از Copilot استفاده می‌کنن، تا ۵۵٪ سریعتر کد می‌نویسن. اما این یعنی نیازی به برنامه‌نویس نیست؟ قطعاً خیر.</p><h3>چرا AI جایگزین انسان نمیشه؟</h3><ul><li><strong>درک نیازمندی‌های بیزینس:</strong> هوش مصنوعی نمی‌تونه جلسات با مشتری رو مدیریت کنه و بفهمه اونا "واقعاً" چی می‌خوان.</li><li><strong>معماری سیستم‌های بزرگ:</strong> طراحی microservices، انتخاب دیتابیس مناسب، مدیریت Scale — این‌ها هنوز هنر انسانیه.</li><li><strong>دیباگ منطقی پیچیده:</strong> وقتی باگ در لایه منطق بیزینس و معماری هست، AI کمکی نمی‌کنه.</li><li><strong>امنیت:</strong> AI ممکن است کدهای آسیب‌پذیر تولید کنه. بازبینی امنیتی هنوز وظیفه قطعی یک انسانه.</li></ul><h3>آنچه واقعاً در حال تغییر است</h3><p>نقش برنامه‌نویس از یک "کدنویس (Coder)" صرف به "معمار نرم‌افزار و حل‌کننده مسئله" تغییر می‌کنه. کسی که فقط Syntax بلده، در خطره. اما کسی که می‌دونه چطور قطعات سیستم رو به هم وصل کنه تا یک مشکل تجاری حل بشه، ارزشش چندین برابر شده.</p><h3>پیشنهاد عملی</h3><p>هوش مصنوعی رو به عنوان یک ابزار قدرتمند ببینید، نه یک رقیب ترسناک. از Copilot برای نوشتن کدهای تکراری (Boilerplate) استفاده کنید و وقت آزاد شده رو صرف یادگیری معماری، سیستم‌دیزاین و مهارت‌های نرم کنید. در دنیای جدید، برنامه‌نویسانی که بلدند از AI خوب استفاده کنند، جایگزین کسانی می‌شنوند که از آن استفاده نمی‌کنند.</p>`}
 ];
 
 // توابع دو زبانه (Language Toggle)
